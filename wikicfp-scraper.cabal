@@ -18,9 +18,12 @@ library
   hs-source-dirs:       src
   ghc-options:          -Wall -fno-warn-unused-imports
   -- default-extensions:   
-  exposed-modules:      Web.WikiCFP.Scraper
+  exposed-modules:      Web.WikiCFP.Scraper,
+                        Web.WikiCFP.Scraper.Type
   -- other-modules:
-  build-depends:        base
+  build-depends:        base,
+                        text,
+                        time
 
 -- executable wikicfp-scraper
 --   default-language:     Haskell2010
