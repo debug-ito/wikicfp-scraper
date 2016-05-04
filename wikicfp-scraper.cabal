@@ -4,14 +4,14 @@ author:                 Toshio Ito <debug.ito@gmail.com>
 maintainer:             Toshio Ito <debug.ito@gmail.com>
 license:                BSD3
 license-file:           LICENSE
--- synopsis:               
--- description:            
--- category:               
+synopsis:               Scrape WikiCFP web site
+description:            Scrape WikiCFP web site
+category:               Web
 cabal-version:          >= 1.10
 build-type:             Simple
 extra-source-files:     README.md, ChangeLog.md
--- homepage:               
--- bug-reports:            
+homepage:               https://github.com/debug-ito/wikicfp-scraper
+bug-reports:            https://github.com/debug-ito/wikicfp-scraper/issues
 
 library
   default-language:     Haskell2010
@@ -44,4 +44,4 @@ test-suite spec
 
 source-repository head
   type:                 git
---  location:             
+  location:             https://github.com/debug-ito/wikicfp-scraper.git
