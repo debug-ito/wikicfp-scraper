@@ -18,9 +18,9 @@ library
   hs-source-dirs:       src
   ghc-options:          -Wall -fno-warn-unused-imports
   -- default-extensions:   
-  exposed-modules:      Web.WikiCFP.Scraper,
-                        Web.WikiCFP.Scraper.Type
-  -- other-modules:
+  exposed-modules:      Web.WikiCFP.Scraper
+                        
+  other-modules:        Web.WikiCFP.Scraper.Type
   build-depends:        base,
                         text,
                         time
