@@ -41,10 +41,12 @@ test-suite spec
   hs-source-dirs:       test
   ghc-options:          -Wall -fno-warn-unused-imports "-with-rtsopts=-M512m"
   main-is:              Spec.hs
-  -- default-extensions:   
+  default-extensions:   OverloadedStrings
   other-modules:        Web.WikiCFP.ScraperSpec
   build-depends:        base, wikicfp-scraper,
-                        hspec
+                        bytestring, time,
+                        hspec,
+                        filepath
 
 source-repository head
   type:                 git
