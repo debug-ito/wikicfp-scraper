@@ -5,11 +5,17 @@
 --
 -- 
 module Web.WikiCFP.Scraper.Type
-       ( Event(..),
+       ( When(..),
+         Event(..),
        ) where
 
 import Data.Text (Text)
 import Data.Time (Day)
+
+-- | Period of dates (inclusive).
+data When = When { whenFrom :: !Day,
+                   whenTo :: !Day
+                 } deriving (Eq,Ord,Show)
 
 -- | A conference event posted to WikiCFP site. It corresponds to a
 -- row in the table you see conference pages etc, for example,
@@ -20,9 +26,8 @@ data Event = Event { eventShortName :: !Text,
                      -- ^ URL to the WikiCFP page of this event.
                      
                      eventLongName :: !Text, 
-                     eventWhenFrom :: !Day,
-                     eventWhenTo :: !Day,
-                     eventWhere :: !Text,
+                     eventWhen :: !(Maybe When),
+                     eventWhere :: !(Maybe Text),
                      
                      eventDeadlines :: ![Day]
                      -- ^ deadlines are in an ascending order, i.e.,

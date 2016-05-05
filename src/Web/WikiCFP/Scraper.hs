@@ -5,7 +5,9 @@
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 -- 
 module Web.WikiCFP.Scraper
-       ( Event(..),
+       ( When(..),
+         Event(..),
+         ErrorMsg,
          HTML(..),
          scrapeConfEvents,
          scrapeSearchEvents
@@ -17,7 +19,7 @@ import Data.Text (Text, pack)
 import Data.Text.Encoding (decodeUtf8')
 import qualified Data.Text.Lazy as LT
 
-import Web.WikiCFP.Scraper.Type (Event(..))
+import Web.WikiCFP.Scraper.Type (When(..), Event(..))
 
 type ErrorMsg = String
 
