@@ -7,7 +7,7 @@ import System.FilePath (FilePath, joinPath)
 import Test.Hspec
 
 import Web.WikiCFP.Scraper
-  ( scrapeConfEvents,
+  ( scrapeConfEvents, scrapeSearchEvents,
     Event(..), When(..)
   )
 
@@ -57,6 +57,48 @@ spec = do
                       }
               ]
       fmap length ret `shouldBe` Right 10
+
+  describe "scrapeSearchEvents" $ do
+    forFile "search_cloud20160505.html" $ \raw_html -> do
+      let ret = scrapeSearchEvents raw_html
+      fmap (take 5) ret `shouldBe`
+        Right [ Event { eventShortName = "CloudCom 2016",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=52874&amp;copyownerid=9221",
+                        eventLongName = "The 8th IEEE International Conference on Cloud Computing Technology and Science",
+                        eventWhen = Just $ newWhen (2016, 12, 12) (2016, 12, 15),
+                        eventWhere = Just "Luxembourg City, Luxembourg",
+                        eventDeadlines = fmap newDay [(2016, 6, 8), (2016, 6, 15)]
+                      },
+                Event { eventShortName = "UCC 2016",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=52465&amp;copyownerid=49250",
+                        eventLongName = "Utility and Cloud Computing",
+                        eventWhen = Just $ newWhen (2016, 12, 6) (2016, 12, 9),
+                        eventWhere = Just "Shanghai, China",
+                        eventDeadlines = fmap newDay [(2016, 7, 3)]
+                      },
+                Event { eventShortName = "SI-Cloud-2 2016",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=50034&amp;copyownerid=53027",
+                        eventLongName = "International Journal of Services Technology and Management (EI) - Special Issue on Big Data Management in the Cloud",
+                        eventWhen = Nothing,
+                        eventWhere = Nothing,
+                        eventDeadlines = fmap newDay [(2016, 8, 30), (2016, 9, 30)]
+                      },
+                Event { eventShortName = "IEEE SC 2016",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=52039&amp;copyownerid=85546",
+                        eventLongName = "The 6th IEEE International Symposium on Cloud and Service Computing",
+                        eventWhen = Just $ newWhen (2016, 12, 8) (2016, 12, 10),
+                        eventWhere = Just "Fiji",
+                        eventDeadlines = fmap newDay [(2016, 8, 10)]
+                      },
+                Event { eventShortName = "ISDSA  2016",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=51832&amp;copyownerid=35379",
+                        eventLongName = "First International Symposium on Data Science and Applications",
+                        eventWhen = Just $ newWhen (2016, 10, 10) (2016, 10, 11),
+                        eventWhere = Just "Milan, Italy",
+                        eventDeadlines = fmap newDay [(2016, 7, 25)]
+                      }
+              ]
+      fmap length ret `shouldBe` Right 30
 
 
 newDay :: (Integer, Int, Int) -> Day
