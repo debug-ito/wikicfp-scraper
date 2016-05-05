@@ -25,17 +25,16 @@ type ErrorMsg = String
 type Scraper' = Scraper Text
 
 -- | Root scraper for conference Events.
-confRoot :: Scraper' [Event]
+confRoot :: Scraper' (Either ErrorMsg [Event])
 confRoot = undefined
 
 -- | Root scraper for searched Events.
-searchRoot :: Scraper' [Event]
+searchRoot :: Scraper' (Either ErrorMsg [Event])
 searchRoot = undefined
 
-
 -- | Scrape events from a table. Use with the root at @\<table\>@ tag.
-eventsTable :: Scraper' [Event]
-eventsTable = undefined -- chroots "tr" (eventRow1 <|> eventRow2 <|> eventRowHeader)
+eventsTable :: Scraper' (Either ErrorMsg [Event])
+eventsTable = rowsToEvents <$> chroots "tr" (eventRow1 <|> eventRow2 <|> eventRowHeader)
 
 -- | Intermediate result of parsing under events \<table\>.
 data EventRow = EventRowHeader

@@ -44,8 +44,8 @@ instance HTML LB.ByteString where
 instance HTML String where
   decodeToText = Right . pack
 
-runScraper :: Scraper' a -> Text -> Either ErrorMsg a
-runScraper s input = maybe (Left "Scraping error") Right $ scrapeStringLike input s
+runScraper :: Scraper' (Either ErrorMsg a) -> Text -> Either ErrorMsg a
+runScraper s input = maybe (Left "Scraping error") id $ scrapeStringLike input s
 
 -- | Scrape a page of a conference, for example,
 -- http://wikicfp.com/cfp/program?id=2671
