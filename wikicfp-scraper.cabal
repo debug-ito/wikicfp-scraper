@@ -22,6 +22,7 @@ library
                         
   other-modules:        Web.WikiCFP.Scraper.Type
   build-depends:        base,
+                        bytestring,
                         text,
                         time
 
