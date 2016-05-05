@@ -20,10 +20,12 @@ library
   -- default-extensions:   
   exposed-modules:      Web.WikiCFP.Scraper
                         
-  other-modules:        Web.WikiCFP.Scraper.Type
+  other-modules:        Web.WikiCFP.Scraper.Type,
+                        Web.WikiCFP.Scraper.Scalpel
   build-depends:        base,
                         bytestring,
                         text,
+                        scalpel,
                         time
 
 -- executable wikicfp-scraper

@@ -18,10 +18,11 @@ import qualified Data.ByteString.Lazy as LB
 import Data.Text (Text, pack)
 import Data.Text.Encoding (decodeUtf8')
 import qualified Data.Text.Lazy as LT
+import Text.HTML.Scalpel (scrapeStringLike)
 
 import Web.WikiCFP.Scraper.Type (When(..), Event(..))
+import Web.WikiCFP.Scraper.Scalpel (ErrorMsg, Scraper', confRoot, searchRoot)
 
-type ErrorMsg = String
 
 -- | Types of input HTML data to scrape.
 class HTML a where
@@ -43,13 +44,16 @@ instance HTML LB.ByteString where
 instance HTML String where
   decodeToText = Right . pack
 
+runScraper :: Scraper' a -> Text -> Either ErrorMsg a
+runScraper s input = maybe (Left "Scraping error") Right $ scrapeStringLike input s
 
 -- | Scrape a page of a conference, for example,
 -- http://wikicfp.com/cfp/program?id=2671
 scrapeConfEvents :: HTML input => input -> Either ErrorMsg [Event]
-scrapeConfEvents = undefined
+scrapeConfEvents t = runScraper confRoot =<< decodeToText t
 
 -- | Scrape a page of search results, for example,
 -- http://wikicfp.com/cfp/servlet/tool.search?q=cloud&year=t
 scrapeSearchEvents :: HTML input => input -> Either ErrorMsg [Event]
-scrapeSearchEvents = undefined
+scrapeSearchEvents t = runScraper searchRoot =<< decodeToText t
+
