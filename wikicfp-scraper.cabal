@@ -26,7 +26,8 @@ library
                         bytestring,
                         text,
                         scalpel,
-                        time
+                        time,
+                        attoparsec
 
 -- executable wikicfp-scraper
 --   default-language:     Haskell2010
