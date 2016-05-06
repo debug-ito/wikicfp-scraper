@@ -15,6 +15,7 @@ import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional)
 import Control.Monad (guard, forM_, mzero)
 import Data.List (sort)
 import Data.Maybe (catMaybes)
+import Data.Monoid ((<>))
 import Data.Text (Text, pack)
 import Data.Time (Day, fromGregorian)
 import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
@@ -82,13 +83,17 @@ rowsToEvents_noHeader ((EventRow1 sn url ln) : (EventRow2 when wher dl) : rest) 
   (:) <$> createEvent sn url ln when wher dl <*> rowsToEvents_noHeader rest
 rowsToEvents_noHeader rows = Left ("Error while parsing rows: " ++ show rows)
 
+-- | TODO: make it configurable.
+urlBase :: Text
+urlBase = pack "http://wikicfp.com"
+
 createEvent :: Text -> Text -> Text -> Text -> Text -> Text -> Either ErrorMsg Event
 createEvent sname url lname when wher dl = do
   when' <- parseWhen when
   wher' <- parseWhere wher
   dl' <- parseDeadlines dl
   return Event { eventShortName = sname,
-                 eventURL = url,
+                 eventURL = urlBase <> url,
                  eventLongName = lname,
                  eventWhen = when',
                  eventWhere = wher',
