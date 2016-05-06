@@ -14,10 +14,11 @@ module Web.WikiCFP.Scraper.Scalpel
 import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional)
 import Control.Monad (guard, forM_)
 import Data.List (sort)
+import Data.Maybe (catMaybes)
 import Data.Text (Text, pack)
 import Data.Time (Day, fromGregorian)
 import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
-import Text.HTML.Scalpel (Scraper, (@:), (@=), chroot, chroots, text, texts, attr)
+import Text.HTML.Scalpel (Scraper, (@:), (@=), (//), chroot, chroots, text, texts, attr, hasClass)
 
 import Web.WikiCFP.Scraper.Type (Event(..), When(..))
 
@@ -27,7 +28,10 @@ type Scraper' = Scraper Text
 
 -- | Root scraper for conference Events.
 confRoot :: Scraper' (Either ErrorMsg [Event])
-confRoot = undefined
+confRoot = do
+  ret_list <- chroots ("div" @: [hasClass "contsec"] // "table" // "table") $ optional eventsTable
+  -- ret_list :: [Maybe (Either ErrorMsg [Event])]
+  return $ concat <$> (sequence $ catMaybes $ ret_list)
 
 -- | Root scraper for searched Events.
 searchRoot :: Scraper' (Either ErrorMsg [Event])
