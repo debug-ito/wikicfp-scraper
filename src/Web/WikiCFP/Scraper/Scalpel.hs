@@ -12,7 +12,7 @@ module Web.WikiCFP.Scraper.Scalpel
        ) where
 
 import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional)
-import Control.Monad (guard, forM_)
+import Control.Monad (guard, forM_, mzero)
 import Data.List (sort)
 import Data.Maybe (catMaybes)
 import Data.Text (Text, pack)
@@ -30,7 +30,6 @@ type Scraper' = Scraper Text
 confRoot :: Scraper' (Either ErrorMsg [Event])
 confRoot = do
   ret_list <- chroots ("div" @: [hasClass "contsec"] // "table" // "table") $ optional eventsTable
-  -- ret_list :: [Maybe (Either ErrorMsg [Event])]
   return $ concat <$> (sequence $ catMaybes $ ret_list)
 
 -- | Root scraper for searched Events.
@@ -39,7 +38,12 @@ searchRoot = undefined
 
 -- | Scrape events from a table. Use with the root at @\<table\>@ tag.
 eventsTable :: Scraper' (Either ErrorMsg [Event])
-eventsTable = rowsToEvents <$> chroots "tr" (eventRow1 <|> eventRow2 <|> eventRowHeader)
+eventsTable = do
+  rows <- chroots "tr" (eventRow1 <|> eventRow2 <|> eventRowHeader)
+  case rows of
+    (EventRowHeader : rest) -> return $ rowsToEvents_noHeader rest
+    _ -> mzero
+    
 
 -- | Intermediate result of parsing under events \<table\>.
 data EventRow = EventRowHeader
@@ -71,12 +75,6 @@ eventRow2 = do
   tds <- texts "td"
   guard $ length tds == 3
   return $ EventRow2 (tds !! 0) (tds !! 1) (tds !! 2)
-
-rowsToEvents :: [EventRow] -> Either ErrorMsg [Event]
-rowsToEvents [] = return []
-rowsToEvents (r:rest) = case r of
-  EventRowHeader -> rowsToEvents_noHeader rest
-  _ -> Left ("The first row must be the header, but it was " ++ show r)
 
 rowsToEvents_noHeader :: [EventRow] -> Either ErrorMsg [Event]
 rowsToEvents_noHeader [] = return []
