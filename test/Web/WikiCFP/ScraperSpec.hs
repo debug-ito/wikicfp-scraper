@@ -51,7 +51,7 @@ spec = do
                 Event { eventShortName = "SIGMOD 2013",
                         eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=24911&copyownerid=5823",
                         eventLongName = "ACM SIGMOD International Conference on Management of Data",
-                        eventWhen = Just $ newWhen (2013, 6, 13) (2013, 6, 28),
+                        eventWhen = Just $ newWhen (2013, 6, 23) (2013, 6, 28),
                         eventWhere = Just "New York",
                         eventDeadlines = fmap newDay [(2012, 11, 13)]
                       }
