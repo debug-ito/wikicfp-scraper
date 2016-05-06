@@ -16,7 +16,7 @@ import Control.Monad (guard, forM_)
 import Data.List (sort)
 import Data.Text (Text, pack)
 import Data.Time (Day, fromGregorian)
-import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText)
+import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
 import Text.HTML.Scalpel (Scraper, (@:), (@=), chroot, chroots, text, texts, attr)
 
 import Web.WikiCFP.Scraper.Type (Event(..), When(..))
@@ -101,44 +101,49 @@ parsable p t = either (const False) (const True) $ parseOnly p t
 spacedText :: Text -> Parser Text
 spacedText expected = skipSpace *> string expected <* skipSpace <* endOfInput
 
+spacedText' :: String -> Parser Text
+spacedText' = spacedText . pack
+
+string' :: String -> Parser Text
+string' = string . pack
+
 parseWhen :: Text -> Either ErrorMsg (Maybe When)
 parseWhen = parseOnly (parserWhen <* endOfInput) where
-  parserWhen = (string "N/A" *> pure Nothing)
-               <|> ( Just
-                     <$> When
-                     <$> (parserDay <* skipSpace <* string "-" <* skipSpace)
-                     <*> (parserDay <* skipSpace)
-                   )
+  parserWhen = (spacedText' "N/A" *> pure Nothing)
+               <|> (Just <$> parserJustWhen)
+  parserJustWhen = When
+                   <$> (parserDay <* skipSpace <* (char '-') <* skipSpace)
+                   <*> (parserDay <* skipSpace)
 
 parseWhere :: Text -> Either ErrorMsg (Maybe Text)
 parseWhere = parseOnly (parserWhere <* endOfInput) where
-  parserWhere = (string "N/A" *> pure Nothing) <|> (Just <$> takeText)
+  parserWhere = (spacedText' "N/A" *> pure Nothing) <|> (Just <$> takeText)
 
 parseDeadlines :: Text -> Either ErrorMsg [Day]
-parseDeadlines = sort <$> parseOnly (parserDeadlines <* endOfInput) where
+parseDeadlines input = sort <$> parseOnly (parserDeadlines <* endOfInput) input where
   parserDeadlines = do
     primary <- parserDay <* skipSpace
-    msecondary <- optional $ (string "(" *> skipSpace *> parserDay <* skipSpace <* string ")")
+    msecondary <- optional $ (char '(' *> skipSpace *> parserDay <* skipSpace <* char ')')
     return $ maybe [primary] (: [primary]) msecondary
 
 parserDay :: Parser Day
 parserDay = impl where
   impl = do
     m <- parserMonth <* skipSpace
-    d <- decimal <* (optional $ string ",") <* skipSpace
+    d <- decimal <* (optional $ char ',') <* skipSpace
     y <- decimal
     return $ fromGregorian y m d
-  parserMonth =     (string "Jan" *> pure 1)
-                <|> (string "Feb" *> pure 2)
-                <|> (string "Mar" *> pure 3)
-                <|> (string "Apr" *> pure 4)
-                <|> (string "May" *> pure 5)
-                <|> (string "Jun" *> pure 6)
-                <|> (string "Jul" *> pure 7)
-                <|> (string "Aug" *> pure 8)
-                <|> (string "Sep" *> pure 9)
-                <|> (string "Oct" *> pure 10)
-                <|> (string "Nov" *> pure 11)
-                <|> (string "Dec" *> pure 12)
+  parserMonth =     (string' "Jan" *> pure 1)
+                <|> (string' "Feb" *> pure 2)
+                <|> (string' "Mar" *> pure 3)
+                <|> (string' "Apr" *> pure 4)
+                <|> (string' "May" *> pure 5)
+                <|> (string' "Jun" *> pure 6)
+                <|> (string' "Jul" *> pure 7)
+                <|> (string' "Aug" *> pure 8)
+                <|> (string' "Sep" *> pure 9)
+                <|> (string' "Oct" *> pure 10)
+                <|> (string' "Nov" *> pure 11)
+                <|> (string' "Dec" *> pure 12)
   
   
