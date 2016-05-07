@@ -30,7 +30,7 @@ type Scraper' = Scraper Text
 -- | Root scraper for conference Events.
 confRoot :: Scraper' (Either ErrorMsg [Event])
 confRoot = do
-  ret_list <- chroots ("div" @: [hasClass "contsec"] // "table" // "table") $ eventsTable
+  ret_list <- chroots ("div" @: [hasClass "contsec"] // "table") $ eventsTable
   return $ concat <$> (sequence $ ret_list)
 
 -- | Root scraper for searched Events.
