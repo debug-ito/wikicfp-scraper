@@ -19,7 +19,10 @@ import Data.Monoid ((<>))
 import Data.Text (Text, pack)
 import Data.Time (Day, fromGregorian)
 import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
-import Text.HTML.Scalpel (Scraper, (@:), (@=), (//), chroot, chroots, text, texts, attr, hasClass)
+import Text.HTML.Scalpel
+  ( Scraper,
+    (@:), (@=), (//), chroot, chroots, text, texts, attr, hasClass
+  )
 
 import Web.WikiCFP.Scraper.Type (Event(..), When(..))
 
@@ -29,13 +32,14 @@ type Scraper' = Scraper Text
 
 -- | Root scraper for conference Events.
 confRoot :: Scraper' (Either ErrorMsg [Event])
-confRoot = do
-  ret_list <- chroots ("div" @: [hasClass "contsec"] // "table") $ eventsTable
-  return $ concat <$> (sequence $ ret_list)
+confRoot = concatSuccess $ chroots ("div" @: [hasClass "contsec"] // "table") $ eventsTable
 
 -- | Root scraper for searched Events.
 searchRoot :: Scraper' (Either ErrorMsg [Event])
-searchRoot = undefined
+searchRoot = confRoot
+
+concatSuccess :: Monad m => m [Either e [a]] -> m (Either e [a])
+concatSuccess = fmap $ fmap concat . sequence
 
 -- | Scrape events from a table. Use with the root at @\<table\>@ tag.
 eventsTable :: Scraper' (Either ErrorMsg [Event])
