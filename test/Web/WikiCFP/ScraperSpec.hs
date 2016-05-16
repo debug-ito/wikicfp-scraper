@@ -100,6 +100,9 @@ spec = do
               ]
       fmap length ret `shouldBe` Right 30
 
+    forFile "search_noresult20160516.html" $ \raw_html -> do
+      scrapeSearchEvents raw_html `shouldBe` Right []
+
 
 newDay :: (Integer, Int, Int) -> Day
 newDay (y, m, d) = fromGregorian y m d
