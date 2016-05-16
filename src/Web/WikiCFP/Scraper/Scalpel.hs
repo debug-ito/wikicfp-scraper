@@ -64,7 +64,7 @@ eventRowHeader = do
   -- We cannot use OverloadedStrings with scalpel (as of 0.3.0.1),
   -- because it requires explicit (:: String) declarations everywhere!
   let expected_labels = map pack ["Event", "When", "Where", "Deadline"]
-  forM_ [0..3] $ \i -> guard $ parsable (spacedText $ expected_labels !! i) $ tds !! i
+  forM_ [0..(length expected_labels - 1)] $ \i -> guard $ parsable (spacedText $ expected_labels !! i) $ tds !! i
   return EventRowHeader
 
 -- | Scrape shortName, URL and longName. Use with the root at @\<tr\>@ tag.
