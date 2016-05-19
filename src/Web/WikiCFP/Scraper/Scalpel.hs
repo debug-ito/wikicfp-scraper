@@ -11,7 +11,7 @@ module Web.WikiCFP.Scraper.Scalpel
          searchRoot
        ) where
 
-import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional)
+import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional, pure)
 import Control.Monad (guard, forM_, mzero)
 import Data.List (sort)
 import Data.Maybe (catMaybes)
