@@ -22,12 +22,12 @@ library
                         
   other-modules:        Web.WikiCFP.Scraper.Type,
                         Web.WikiCFP.Scraper.Scalpel
-  build-depends:        base,
-                        bytestring,
-                        text,
-                        scalpel,
-                        time,
-                        attoparsec
+  build-depends:        base >=4.8.1 && <4.9,
+                        bytestring >=0.10.6 && <0.11,
+                        text >=1.2.1 && <1.3,
+                        scalpel >=0.2.1 && <0.3,
+                        time >=1.5.0 && <1.6,
+                        attoparsec >=0.12.1 && <0.14
 
 -- executable wikicfp-scraper
 --   default-language:     Haskell2010
@@ -48,8 +48,8 @@ test-suite spec
   other-modules:        Web.WikiCFP.ScraperSpec
   build-depends:        base, wikicfp-scraper,
                         bytestring, time,
-                        hspec,
-                        filepath
+                        hspec >=2.1.10 && <2.3,
+                        filepath >=1.4.0 && <1.5
 
 source-repository head
   type:                 git
