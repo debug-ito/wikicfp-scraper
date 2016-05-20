@@ -38,7 +38,7 @@ confRoot = concatSuccess $ chroots ("div" @: [hasClass "contsec"] // "table") $ 
 searchRoot :: Scraper' (Either ErrorMsg [Event])
 searchRoot = confRoot
 
-concatSuccess :: Monad m => m [Either e [a]] -> m (Either e [a])
+concatSuccess :: (Functor m, Monad m) => m [Either e [a]] -> m (Either e [a])
 concatSuccess = fmap $ fmap concat . sequence
 
 -- | Scrape events from a table. Use with the root at @\<table\>@ tag.
