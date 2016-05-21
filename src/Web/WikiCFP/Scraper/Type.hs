@@ -19,7 +19,7 @@ data When = When { whenFrom :: !Day,
 
 -- | A conference event posted to WikiCFP site. It corresponds to a
 -- row in the table you see conference pages etc, for example,
--- http://wikicfp.com/cfp/program?id=1172
+-- <http://wikicfp.com/cfp/program?id=1172>
 data Event = Event { eventShortName :: !Text,
                      
                      eventURL :: !Text,

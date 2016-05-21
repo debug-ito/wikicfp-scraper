@@ -14,7 +14,9 @@
 -- >   res <- H.getResponseBody =<< H.simpleHTTP (H.getRequest "http://wikicfp.com/cfp/servlet/tool.search?q=japan&year=t")
 -- >   print $ scrapeSearchEvents res
 --
--- TBW.
+-- This module scrapes WikiCFP pages (<http://wikicfp.com/>) for
+-- call-for-papers. It helps you stay up to date with deadlines of
+-- academic paper submissions.
 module Web.WikiCFP.Scraper
        ( -- * Scraper routines
          scrapeConfEvents,
@@ -61,12 +63,12 @@ runScraper :: Scraper' (Either ErrorMsg a) -> Text -> Either ErrorMsg a
 runScraper s input = maybe (Left "Scraping error") id $ scrapeStringLike input s
 
 -- | Scrape a page of a conference, for example,
--- http://wikicfp.com/cfp/program?id=2671
+-- <http://wikicfp.com/cfp/program?id=2671>
 scrapeConfEvents :: HTML input => input -> Either ErrorMsg [Event]
 scrapeConfEvents t = runScraper confRoot =<< decodeToText t
 
 -- | Scrape a page of search results, for example,
--- http://wikicfp.com/cfp/servlet/tool.search?q=cloud&year=t
+-- <http://wikicfp.com/cfp/servlet/tool.search?q=cloud&year=t>
 scrapeSearchEvents :: HTML input => input -> Either ErrorMsg [Event]
 scrapeSearchEvents t = runScraper searchRoot =<< decodeToText t
 
