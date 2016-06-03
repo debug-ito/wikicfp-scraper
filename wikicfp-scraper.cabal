@@ -9,7 +9,7 @@ description:            Scrape WikiCFP web site. See 'Web.WikiCFP.Scraper'.
 category:               Web
 cabal-version:          >= 1.10
 build-type:             Simple
-extra-source-files:     README.md, ChangeLog.md
+extra-source-files:     README.md, ChangeLog.md, test/data/*.html
 homepage:               https://github.com/debug-ito/wikicfp-scraper
 bug-reports:            https://github.com/debug-ito/wikicfp-scraper/issues
 
