@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.3  -- 2016-06-20
+
+* Bug fix. Now it returns an empty deadlines (`[]`) for "TBD".
+
+
 ## 0.1.0.2  -- 2016-06-03
 
 * Fix packaging. Now it contains test/data/*.html necessary to run
