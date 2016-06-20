@@ -16,6 +16,11 @@ main = hspec spec
 
 spec :: Spec
 spec = do
+  spec_normal
+  spec_marginal
+
+spec_normal :: Spec
+spec_normal = do
   describe "scrapeConfEvents" $ do
     forFile "conf_sigmod20160505.html" $ \raw_html -> do
       let ret = scrapeConfEvents raw_html
@@ -100,8 +105,27 @@ spec = do
               ]
       fmap length ret `shouldBe` Right 30
 
+
+spec_marginal :: Spec
+spec_marginal = do
+  describe "scrapeConfEvents" $ do
+    describe "no deadlines" $ do
+      forFile "conf_mobisys20160620.html" $ \raw_html -> do
+        let ret = scrapeConfEvents raw_html
+        fmap (!! 8) ret `shouldBe`
+          Right Event { eventShortName = "Mobisys 2008",
+                        eventURL = "http://wikicfp.com/cfp/servlet/event.showcfp?eventid=1279&copyownerid=2",
+                        eventLongName = "The 6th International Conference on Mobile Systems, Applications, and Services",
+                        eventWhen = Just $ newWhen (2008, 6, 10) (2008, 6, 13),
+                        eventWhere = Just $ "Breckenridge, CO, USA",
+                        eventDeadlines = []
+                      }
+
+  describe "scrapeSearchEvents" $ do
     forFile "search_noresult20160516.html" $ \raw_html -> do
       scrapeSearchEvents raw_html `shouldBe` Right []
+
+      
 
 
 newDay :: (Integer, Int, Int) -> Day
