@@ -132,7 +132,8 @@ parseWhere = parseOnly (parserWhere <* endOfInput) where
 
 parseDeadlines :: Text -> Either ErrorMsg [Day]
 parseDeadlines input = sort <$> parseOnly (parserDeadlines <* endOfInput) input where
-  parserDeadlines = do
+  parserDeadlines = strictParserDeadlines <|> (takeText *> return [])
+  strictParserDeadlines = do
     primary <- parserDay <* skipSpace
     msecondary <- optional $ (char '(' *> skipSpace *> parserDay <* skipSpace <* char ')')
     return $ maybe [primary] (: [primary]) msecondary
