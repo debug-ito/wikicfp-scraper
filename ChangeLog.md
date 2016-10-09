@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.4  -- 2016-10-09
+
+* Confirmed build with `hspec-2.3.0`.
+
+
 ## 0.1.0.3  -- 2016-06-20
 
 * Bug fix. Now it returns an empty deadlines (`[]`) for "TBD".
