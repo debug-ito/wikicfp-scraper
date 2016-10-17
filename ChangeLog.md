@@ -1,5 +1,11 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.5  -- 2016-10-17
+
+* Confirmed build with `scalpel-0.4.0`.
+* Now this module uses CPP to deal with changes introduced in `scalpel-0.4.0`.
+
+
 ## 0.1.0.4  -- 2016-10-09
 
 * Confirmed build with `hspec-2.3.0`.
