@@ -4,6 +4,13 @@
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 --
 -- 
+{-# LANGUAGE CPP #-}
+
+-- Since scalpel-0.4.0, Selector, AttributeName and TagName are data
+-- types (not type classes) that are instances of IsString.
+#if MIN_VERSION_scalpel(0,4,0)
+{-# LANGUAGE OverloadedStrings #-}
+#endif
 module Web.WikiCFP.Scraper.Scalpel
        ( ErrorMsg,
          Scraper',
