@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.7  -- 2017-01-24
+
+* Confirmed test with `hspec-2.4.0`
+
+
 ## 0.1.0.6  -- 2016-11-27
 
 * Confirmed test with `time-1.7`.
