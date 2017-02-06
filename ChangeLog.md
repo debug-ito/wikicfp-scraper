@@ -1,5 +1,13 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.8  -- 2017-02-06
+
+* No API change.
+* Change dependency on `scalpel` to `scalpel-core`, because the latter
+  has lighter dependency.
+* Drop dependency upper bound for `hspec`. It's stable enough.
+
+
 ## 0.1.0.7  -- 2017-01-24
 
 * Confirmed test with `hspec-2.4.0`
