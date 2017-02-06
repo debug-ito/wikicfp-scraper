@@ -49,7 +49,7 @@ test-suite spec
   other-modules:        Web.WikiCFP.ScraperSpec
   build-depends:        base, wikicfp-scraper,
                         bytestring, time,
-                        hspec >=2.1.5 && <2.5,
+                        hspec >=2.1.5,
                         filepath >=1.3.0 && <1.5
 
 source-repository head
