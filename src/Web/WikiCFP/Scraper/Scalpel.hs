@@ -4,13 +4,8 @@
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 --
 -- 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP, OverloadedStrings #-}
 
--- Since scalpel-0.4.0, Selector, AttributeName and TagName are data
--- types (not type classes) that are instances of IsString.
-#if MIN_VERSION_scalpel(0,4,0)
-{-# LANGUAGE OverloadedStrings #-}
-#endif
 module Web.WikiCFP.Scraper.Scalpel
        ( ErrorMsg,
          Scraper',
@@ -26,7 +21,7 @@ import Data.Monoid ((<>))
 import Data.Text (Text, pack)
 import Data.Time (Day, fromGregorian)
 import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
-import Text.HTML.Scalpel
+import Text.HTML.Scalpel.Core
   ( Scraper,
     (@:), (@=), (//), chroot, chroots, text, texts, attr, hasClass
   )

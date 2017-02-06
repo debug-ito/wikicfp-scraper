@@ -33,7 +33,7 @@ import qualified Data.ByteString.Lazy as LB
 import Data.Text (Text, pack)
 import Data.Text.Encoding (decodeUtf8')
 import qualified Data.Text.Lazy as LT
-import Text.HTML.Scalpel (scrapeStringLike)
+import Text.HTML.Scalpel.Core (scrapeStringLike)
 
 import Web.WikiCFP.Scraper.Type (When(..), Event(..))
 import Web.WikiCFP.Scraper.Scalpel (ErrorMsg, Scraper', confRoot, searchRoot)
