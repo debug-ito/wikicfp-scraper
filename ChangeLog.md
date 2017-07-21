@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.9  -- 2017-07-21
+
+* Confirmed test with `time-1.8`.
+
+
 ## 0.1.0.8  -- 2017-02-06
 
 * No API change.
