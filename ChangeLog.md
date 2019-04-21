@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.11  -- 2019-04-21
+
+* Confirmed test with `time-1.9`.
+
+
 ## 0.1.0.10  -- 2019-02-19
 
 * Confirmed test with `scalpel-core-0.6.0`.
