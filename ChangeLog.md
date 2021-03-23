@@ -1,5 +1,10 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.12  -- 2021-03-23
+
+* Confirmed test with `attoparsec-0.14.1`.
+
+
 ## 0.1.0.11  -- 2019-04-21
 
 * Confirmed test with `time-1.9`.
