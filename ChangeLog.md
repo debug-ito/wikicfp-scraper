@@ -1,6 +1,6 @@
 # Revision history for wikicfp-scraper
 
-## 0.1.0.13  -- ?
+## 0.1.0.13  -- 2022-11-25
 
 * Confirmed test with ghc-9.2.5.
 
