@@ -1,15 +1,15 @@
-module Web.WikiCFP.ScraperSpec (main, spec) where
+module Web.WikiCFP.ScraperSpec
+    ( main
+    , spec
+    ) where
 
-import Data.ByteString (ByteString)
-import qualified Data.ByteString as BS
-import Data.Time (Day, fromGregorian)
-import System.FilePath (FilePath, joinPath)
-import Test.Hspec
+import           Data.ByteString     (ByteString)
+import qualified Data.ByteString     as BS
+import           Data.Time           (Day, fromGregorian)
+import           System.FilePath     (FilePath, joinPath)
+import           Test.Hspec
 
-import Web.WikiCFP.Scraper
-  ( scrapeConfEvents, scrapeSearchEvents,
-    Event(..), When(..)
-  )
+import           Web.WikiCFP.Scraper (Event (..), When (..), scrapeConfEvents, scrapeSearchEvents)
 
 main :: IO ()
 main = hspec spec
@@ -125,7 +125,7 @@ spec_marginal = do
     forFile "search_noresult20160516.html" $ \raw_html -> do
       scrapeSearchEvents raw_html `shouldBe` Right []
 
-      
+
 
 
 newDay :: (Integer, Int, Int) -> Day

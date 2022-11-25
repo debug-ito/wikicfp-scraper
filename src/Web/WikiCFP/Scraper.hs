@@ -1,14 +1,15 @@
-{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 -- |
 -- Module: Web.WikiCFP.Scraper
 -- Description: Scrape WikiCFP web site
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
--- 
+--
 -- Synopsis:
 --
 -- > import qualified Network.HTTP as H
 -- > import Web.WikiCFP.Scraper (scrapeSearchEvents)
--- > 
+-- >
 -- > main :: IO ()
 -- > main =  do
 -- >   res <- H.getResponseBody =<< H.simpleHTTP (H.getRequest "http://wikicfp.com/cfp/servlet/tool.search?q=japan&year=t")
@@ -18,25 +19,25 @@
 -- call-for-papers. It helps you stay up to date with deadlines of
 -- academic paper submissions.
 module Web.WikiCFP.Scraper
-       ( -- * Scraper routines
-         scrapeConfEvents,
-         scrapeSearchEvents,
-         -- * Types
-         ErrorMsg,
-         HTML(..),
-         When(..),
-         Event(..)
-       ) where
+    ( -- * Scraper routines
+      scrapeConfEvents
+    , scrapeSearchEvents
+      -- * Types
+    , ErrorMsg
+    , HTML (..)
+    , When (..)
+    , Event (..)
+    ) where
 
-import qualified Data.ByteString as SB
-import qualified Data.ByteString.Lazy as LB
-import Data.Text (Text, pack)
-import Data.Text.Encoding (decodeUtf8')
-import qualified Data.Text.Lazy as LT
-import Text.HTML.Scalpel.Core (scrapeStringLike)
+import qualified Data.ByteString             as SB
+import qualified Data.ByteString.Lazy        as LB
+import           Data.Text                   (Text, pack)
+import           Data.Text.Encoding          (decodeUtf8')
+import qualified Data.Text.Lazy              as LT
+import           Text.HTML.Scalpel.Core      (scrapeStringLike)
 
-import Web.WikiCFP.Scraper.Type (When(..), Event(..))
-import Web.WikiCFP.Scraper.Scalpel (ErrorMsg, Scraper', confRoot, searchRoot)
+import           Web.WikiCFP.Scraper.Scalpel (ErrorMsg, Scraper', confRoot, searchRoot)
+import           Web.WikiCFP.Scraper.Type    (Event (..), When (..))
 
 
 -- | Types of input HTML data to scrape.

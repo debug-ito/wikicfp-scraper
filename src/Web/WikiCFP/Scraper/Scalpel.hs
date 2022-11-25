@@ -3,30 +3,30 @@
 -- Description: Scraper implementation with Scalpel
 -- Maintainer: Toshio Ito <debug.ito@gmail.com>
 --
--- 
-{-# LANGUAGE CPP, OverloadedStrings #-}
+--
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Web.WikiCFP.Scraper.Scalpel
-       ( ErrorMsg,
-         Scraper',
-         confRoot,
-         searchRoot
-       ) where
+    ( ErrorMsg
+    , Scraper'
+    , confRoot
+    , searchRoot
+    ) where
 
-import Control.Applicative ((<$>), (<*>), (<|>), (<*), (*>), optional, pure)
-import Control.Monad (guard, forM_, mzero)
-import Data.List (sort)
-import Data.Maybe (catMaybes)
-import Data.Monoid ((<>))
-import Data.Text (Text, pack)
-import Data.Time (Day, fromGregorian)
-import Data.Attoparsec.Text (Parser, parseOnly, skipSpace, string, endOfInput, decimal, takeText, char)
-import Text.HTML.Scalpel.Core
-  ( Scraper,
-    (@:), (@=), (//), chroot, chroots, text, texts, attr, hasClass
-  )
+import           Control.Applicative      (optional, pure, (*>), (<$>), (<*), (<*>), (<|>))
+import           Control.Monad            (forM_, guard, mzero)
+import           Data.Attoparsec.Text     (Parser, char, decimal, endOfInput, parseOnly, skipSpace,
+                                           string, takeText)
+import           Data.List                (sort)
+import           Data.Maybe               (catMaybes)
+import           Data.Monoid              ((<>))
+import           Data.Text                (Text, pack)
+import           Data.Time                (Day, fromGregorian)
+import           Text.HTML.Scalpel.Core   (Scraper, attr, chroot, chroots, hasClass, text, texts,
+                                           (//), (@:), (@=))
 
-import Web.WikiCFP.Scraper.Type (Event(..), When(..))
+import           Web.WikiCFP.Scraper.Type (Event (..), When (..))
 
 type ErrorMsg = String
 
@@ -49,14 +49,15 @@ eventsTable = do
   rows <- chroots "tr" (eventRow1 <|> eventRow2 <|> eventRowHeader)
   case rows of
     (EventRowHeader : rest) -> return $ rowsToEvents_noHeader rest
-    _ -> mzero
-    
+    _                       -> mzero
+
 
 -- | Intermediate result of parsing under events \<table\>.
-data EventRow = EventRowHeader
-              | EventRow1 Text Text Text -- ^ shortName, URL and longName
-              | EventRow2 Text Text Text -- ^ when, where, deadlines
-              deriving (Eq,Ord,Show)
+data EventRow
+  = EventRowHeader
+  | EventRow1 Text Text Text -- ^ shortName, URL and longName
+  | EventRow2 Text Text Text -- ^ when, where, deadlines
+  deriving (Eq, Ord, Show)
 
 -- | Scrape header row. Use with the root at @\<tr\>@ tag.
 eventRowHeader :: Scraper' EventRow
@@ -159,5 +160,5 @@ parserDay = impl where
                 <|> (string' "Oct" *> pure 10)
                 <|> (string' "Nov" *> pure 11)
                 <|> (string' "Dec" *> pure 12)
-  
-  
+
+
