@@ -1,5 +1,9 @@
 # Revision history for wikicfp-scraper
 
+## 0.1.0.13  -- ?
+
+* Confirmed test with ghc-9.2.5.
+
 ## 0.1.0.12  -- 2021-03-23
 
 * Confirmed test with `attoparsec-0.14.1`.
